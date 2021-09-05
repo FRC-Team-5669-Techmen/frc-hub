@@ -1,10 +1,18 @@
 import { getAuth, getRedirectResult, signInWithRedirect, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged, browserLocalPersistence, setPersistence } from "https://www.gstatic.com/firebasejs/9.0.1/firebase-auth.js";
 //import * as app from "../main.js"
 
-import { authChangeHandler } from "../main.js"
+//import { authChangeHandler } from "../main.js"
 
 const provider = new GoogleAuthProvider();
 var auth;
+
+var authChangeHandler = function() {
+    return false
+}
+
+export async function setAuthStateHandler(handler) {
+    authChangeHandler = handler;
+}
 
 export async function initAuth(app) {
     async function authObjSet() {
