@@ -1,7 +1,10 @@
 import { getFirestore, collection, getDocs, addDoc } from 'https://www.gstatic.com/firebasejs/9.0.1/firebase-firestore-lite.js';
-import * as app from "../main.js"
 
-const db = getFirestore(app);
+var db;
+
+export function initFirestore(app) {
+    db = getFirestore(app);
+}
 
 export async function getCities() {
     try {
