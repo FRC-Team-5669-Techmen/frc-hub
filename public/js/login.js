@@ -1,44 +1,53 @@
-import { initAuth, googleSignIn, signOutUser, attemptSignIn, authState, initPersist, setAuthStateHandler } from "./auth/auth.js"
-import { initFirestore, getCities } from "./firestore/firestore.js"
+import { initAuth, attemptSignIn, signOutUser, initPersist, setAuthStateHandler } from "./auth/auth.js"
+import { initFirestore, getCities, checkNewUserId, setupNewAccount } from "./firestore/firestore.js"
 
 import { app } from "./firebaseInit.js"
 
 
 var isSignedIn = false
 var userObj;
+var userId;
 
 window.onload = function () {
     setAuthStateHandler(authChangeHandler).then(() => {
         initAuth(app).then(() => {
-            initPersist()
-            initContent()
+            initPersist().then(() => {
+                initContent()
+            })
         })
     })
     initFirestore(app)
     getCities()
 }
 
-document.getElementById("signOut").onclick = signOutUser
-document.getElementById("signIn").onclick = signIn
+document.getElementById("signIn").onclick = attemptSignIn
 
-function signIn() {
-    attemptSignIn()
-}
 
 function initContent() {
-    if (isSignedIn) {
-        document.getElementById('signIn').classList.add("sign-in-hidden");
+}
+
+export async function authChangeHandler(signedIn, user) {
+    if (signedIn) {
+        //if (user.email.endsWith("boscotech.net")) {
+        console.log("signed in")
+        //window.location.href = "/"
+        isSignedIn = true
+        userObj = user
+        userId = (user.email.split("@")[0].replace(".", "-"))
+        var userExists = await checkNewUserId(userId)
+        if(!userExists) isNewAccount()
+        //} else {
+        //    console.warn("email is not of the correct organization. please use an email from the official bosco tech organization")
+        //    signOutUser()
+        //}
+    } else if (!signedIn) {
+        console.log("signed out")
+        isSignedIn = false
+        userObj = null
     }
 }
 
-export function authChangeHandler(signedIn, user) {
-    if (signedIn) {
-        console.log("signed in")
-        signedIn = true
-        userObj = user
-    } else if (!signedIn) {
-        console.log("signed out")
-        signedIn = false
-        userObj = null
-    }
+function isNewAccount() {
+    console.log("this is a new account")
+    setupNewAccount(userId, userObj)
 }

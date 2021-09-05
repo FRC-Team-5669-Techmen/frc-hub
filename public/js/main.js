@@ -10,8 +10,9 @@ var userObj;
 window.onload = function () {
     setAuthStateHandler(authChangeHandler).then(() => {
         initAuth(app).then(() => {
-            initPersist()
-            initContent()
+            initPersist().then(() => {
+                initContent()
+            })
         })
     })
     initFirestore(app)
@@ -19,26 +20,20 @@ window.onload = function () {
 }
 
 document.getElementById("signOut").onclick = signOutUser
-document.getElementById("signIn").onclick = signIn
 
-function signIn() {
-    attemptSignIn()
-}
 
-function initContent() {
-    if (isSignedIn) {
-        document.getElementById('signIn').classList.add("sign-in-hidden");
-    }
+function initContent() /* calls after authChangeHandler detects if the user is logged in */ {
 }
 
 export function authChangeHandler(signedIn, user) {
     if (signedIn) {
         console.log("signed in")
-        signedIn = true
+        isSignedIn = true
         userObj = user
     } else if (!signedIn) {
         console.log("signed out")
-        signedIn = false
+        window.location.href = "/login"
+        isSignedIn = false
         userObj = null
     }
 }
