@@ -30,7 +30,7 @@ export async function authChangeHandler(signedIn, user) {
     if (signedIn) {
         //if (user.email.endsWith("boscotech.net")) {
         console.log("signed in")
-        //window.location.href = "/"
+        window.location.href = "/"
         isSignedIn = true
         userObj = user
         userId = (user.email.split("@")[0].replace(".", "-"))
