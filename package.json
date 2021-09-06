@@ -1,0 +1,23 @@
+{
+  "name": "frc-hub",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FRC-Team-5669-Techmen/frc-hub.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FRC-Team-5669-Techmen/frc-hub/issues"
+  },
+  "homepage": "https://github.com/FRC-Team-5669-Techmen/frc-hub#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "firebase": "^9.0.1"
+  }
+}
