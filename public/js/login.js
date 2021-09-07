@@ -28,18 +28,19 @@ function initContent() {
 
 export async function authChangeHandler(signedIn, user) {
     if (signedIn) {
-        //if (user.email.endsWith("boscotech.net")) {
+        if (user.email.endsWith("boscotech.net")) {
         console.log("signed in")
         window.location.href = "/"
         isSignedIn = true
         userObj = user
         userId = (user.email.split("@")[0].replace(".", "-"))
         var userExists = await checkNewUserId(userId)
-        if(!userExists) isNewAccount()
-        //} else {
-        //    console.warn("email is not of the correct organization. please use an email from the official bosco tech organization")
-        //    signOutUser()
-        //}
+        if(!userExists) isNewAccount();
+
+        } else {
+            console.warn("email is not of the correct organization. please use an email from the official bosco tech organization")
+            signOutUser()
+        }
     } else if (!signedIn) {
         console.log("signed out")
         isSignedIn = false

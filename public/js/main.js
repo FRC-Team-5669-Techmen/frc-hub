@@ -23,6 +23,7 @@ document.getElementById("signOut").onclick = signOutUser
 
 
 function initContent() /* calls after authChangeHandler detects if the user is logged in */ {
+    console.log(userObj.email.split("@")[0].replace(".", "-"))
 }
 
 export function authChangeHandler(signedIn, user) {
